@@ -12,8 +12,11 @@ const ProductSchema = new Schema({
         required : true
     },
     currency : {
-        type : Number,
+        type : String,
         required : true
+    },
+    image : {
+        type : String
     }
 },{ timestamps : true })
 

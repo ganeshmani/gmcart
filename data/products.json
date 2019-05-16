@@ -1,0 +1,51 @@
+[
+    {
+      "productname": "Product 1",
+      "price": 499.99,
+      "currency" : "EUR",
+      "image": "01.jpg"
+    },
+    {
+      "productname": "product 2",
+      "price": 249.99,
+      "currency": "EUR",
+      "image": "02.jpg"
+    },
+    {
+      "productname": "product 2",
+      "price": 249.99,
+      "currency": "EUR",
+      "image": "02.jpg"
+    },
+    {
+      "productname": "product 2",
+      "price": 249.99,
+      "currency": "EUR",
+      "image": "02.jpg"
+    },
+    {
+      "productname": "product 2",
+      "price": 249.99,
+      "currency": "EUR",
+      "image": "02.jpg"
+    },
+    {
+      "productname": "product 2",
+      "price": 249.99,
+      "currency": "EUR",
+      "image": "02.jpg"
+    },
+    {
+      "productname": "product 2",
+      "price": 249.99,
+      "currency": "EUR",
+      "image": "02.jpg"
+    },
+    {
+      "productname": "product 2",
+      "price": 249.99,
+      "currency": "EUR",
+      "image": "02.jpg"
+    }
+  ]
+  

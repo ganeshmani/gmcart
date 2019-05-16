@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "dev": "nodemon app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -18,5 +19,8 @@
     "helmet": "^3.18.0",
     "joi": "^14.3.1",
     "mongoose": "^5.5.6"
+  },
+  "devDependencies": {
+    "nodemon": "^1.19.0"
   }
 }

@@ -5,11 +5,16 @@ const User = require('../schema/user.schema');
 const mongoose = require('mongoose');
 const Joi = require('joi');
 
+
+router.get('/',(req,res) => {
+    console.log(`it is working`);
+})
+
 router.post('/login', async (req,res) => {
 
     const validationSchema = Joi.object().keys({
         'username' : Joi.string().required(),
-        'password' : Joi.string.required()
+        'password' : Joi.string().required()
     });
 
     const { error,value } = Joi.validate(req.body,validationSchema);
@@ -23,27 +28,29 @@ router.post('/login', async (req,res) => {
     else{
         try{
   
-            const user = await User.find(
+            let user = await User.findOne(
                 { 
-                    $or : [ { 'username' : req.body.username },{ 'email' : req.body.email } ]
+                    $or : [ { 'username' : req.body.username },{ 'email' : req.body.username } ]
                 });
 
             if(user && user.validPassword(req.body.password)){
 
                 res.status(200).json({
                     status : 1,
-                    message : 'login successfully'
+                    message : 'login successfully',
+                    data : user
                 })
             }
             else{
                 res.status(200).json({
                     status : 0,
-                    message : 'Invalid Credentials'
+                    message : 'Invalid Credentials',
+                    data : null
                 })
             }      
         }
         catch(e){
-            
+            console.log("Error",e);    
             res.status(500).json({
                 status : 0,
                 message : 'Something went wrong'
@@ -71,12 +78,14 @@ router.post('/register', async (req,res) => {
 
         try{
 
-            const user = new User();
+            let user = new User();
 
             user.username = req.body.username;
             user.email = req.body.email;
             user.password = user.setPassword(req.body.password);
-
+            
+            console.log(`password => ${req.body.password}`);
+            console.log("user =>",user);
             await user.save()
 
             res.status(200).json({
@@ -85,6 +94,7 @@ router.post('/register', async (req,res) => {
             })
         }
         catch(e){
+            console.log(e);
             res.status(500).json({
                 message : 'failed',
                 data : null
@@ -93,11 +103,39 @@ router.post('/register', async (req,res) => {
     }
 })
 
+router.post('/product/save',async (req,res) => {
+    try{
+
+        let product = new Product();
+
+        product.productname = req.body.productname;
+        product.price = req.body.price;
+        product.currency = req.body.currency;
+        product.image = req.body.image;
+
+
+        await product.save();
+
+        res.status(200).json({
+            message : 'success'
+        })
+
+    }
+    catch(e){
+
+        console.log("error",e);
+
+        res.status(500).json({
+            message : 'failed'
+        });
+    }
+})
+
 router.get('/product/list', async (req,res) => {
 
     try{
 
-        const product = Product.find();
+        let product = await Product.find({});
 
         if(product){
 
@@ -117,6 +155,7 @@ router.get('/product/list', async (req,res) => {
         }
     }
     catch(e){
+        console.log("error",e);
         res.status(500).json({
             status : 0,
             message : 'failed',
@@ -142,8 +181,8 @@ router.post('/addtocart', async (req,res) => {
     else{
 
         try{
-
-          await User.updateOne({ '_id' : mongoose.Types.ObjectId(userid) },{
+  
+          let user =  await User.updateOne({ '_id' : mongoose.Types.ObjectId(req.body.userid) },{
               $push : {
                   products : mongoose.Types.ObjectId(req.body.productid)
               } 
@@ -151,11 +190,12 @@ router.post('/addtocart', async (req,res) => {
 
           res.status(200).json({
               status : 1,
-              message : 'product added successfully'
+              message : 'product added successfully',
+              data : user
           })
         }
         catch(e){
-
+            console.log("Error",e);
             res.status(500).json({
                 status : 0,
                 message : 'something went wrong'
@@ -180,16 +220,27 @@ router.post('/checkout', async (req,res) => {
         })
     }
     else{
-
         try{
+            const user = User.findById(mongoose.Types.ObjectId(req.body.userid)).populate('products');
 
-            const user = User.findById(mongoose.Types.ObjectId(req.body.userid));
-
-            // let products = user.products
+            let products = user;
+            
+            res.status(200).json({
+                message : 'success',
+                data : products
+            });
         }
         catch(e){
+
+            res.status(500).json({
+                message : 'failure',
+                data : null
+            })
 
         }
 
     }
 })
+
+
+module.exports = router;

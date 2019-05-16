@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-
+const crypto = require('crypto');
 const Schema = mongoose.Schema;
 
 const UserSchema = new Schema({
@@ -16,13 +16,15 @@ const UserSchema = new Schema({
         type : String,
         required : true
     },
+    hash: String,
+    salt: String,
     products : [
-        { type : mongoose.Types.ObjectId,ref : 'Product' }
+        { type : mongoose.Schema.Types.ObjectId,ref : 'Product' }
     ]
 },{ timestamps : true })
 
-
-UserSchema.methods.validPassword = function(password) {
+UserSchema.methods.validPassword = function(password){
+    
     var hash = crypto.pbkdf2Sync(password, this.salt, 10000, 512, 'sha512').toString('hex');
     return this.hash === hash;
 };
@@ -30,8 +32,9 @@ UserSchema.methods.validPassword = function(password) {
 UserSchema.methods.setPassword = function(password){
     this.salt = crypto.randomBytes(16).toString('hex');
     this.hash = crypto.pbkdf2Sync(password, this.salt, 10000, 512, 'sha512').toString('hex');
+
+    return this.hash;
 };
 
-const User = mongoose.model('User',UserSchema);  
 
-module.exports = User;
+module.exports = mongoose.model('User',UserSchema); 
