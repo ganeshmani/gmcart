@@ -9,9 +9,10 @@ export class ProductLists extends Component {
 
       this.props.fetchProducts();
   
+      this.onCartChange = this.onCartChange.bind(this);
   }  
 
-  addToCart(id) {
+  onCartChange = (id) => {
       console.log("id =>",id);
   }
 
@@ -25,9 +26,7 @@ export class ProductLists extends Component {
         <div className="ui container">
         <div className="ui link cards">
             {products.map((v,i) => {
-
-                    return <ProductLisItem key={i} id={v._id} name={v.productname} price={v.price} image={v.image} currency={v.currency} addToCart={this.addToCart} />
-            
+                    return <ProductLisItem key={i} id={v._id} name={v.productname} price={v.price} image={v.image} currency={v.currency} addToCart={this.onCartChange} />
             })}
             
         

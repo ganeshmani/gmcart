@@ -1,4 +1,4 @@
-import { LOGIN_USER,REGISTER_USER } from '../actions/types';
+import { LOGIN_USER,REGISTER_USER, LOGOUT_USER } from '../actions/types';
 
 const initialState = {
     user : {},
@@ -17,6 +17,12 @@ export default function(state=initialState,action){
             return {
                 ...state,
                 user : action.payload
+            } 
+            
+        case LOGOUT_USER:
+            return {
+                ...state,
+                user : {}
             }    
 
         default:

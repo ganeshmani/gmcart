@@ -5,6 +5,7 @@ import App from './App';
 import Login from './components/Login';
 import Register from './components/Register';
 import NotFound  from './components/NotFound';
+import Cart from './components/Cart';
 import { Provider } from 'react-redux';
 import store from './store'
 import { Route , BrowserRouter as Router,Switch} from 'react-router-dom'
@@ -18,6 +19,8 @@ const routing = (
         <Route exact path="/" component={App} />
         <Route path="/user/register" component={Register}/>
         <Route path="/user/login" component={Login} />
+        <Route path="/user/checkout" component={Cart} />
+
         <Route component={ NotFound} />
 
         </Switch>

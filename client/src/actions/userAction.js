@@ -1,4 +1,4 @@
-import { LOGIN_USER,REGISTER_USER } from './types';
+import { LOGIN_USER,REGISTER_USER,LOGOUT_USER } from './types';
 
 
 
@@ -37,7 +37,6 @@ export const registerUser = userData => dispatch => {
     .then(res => res.json())
     .then(user => 
         {
-
             if(user.status === 1){
 
                 dispatch({
@@ -45,8 +44,17 @@ export const registerUser = userData => dispatch => {
                     payload : user
                 })
             }
-
         }
         )
         .catch(error => console.log(error))
+}
+
+export const logoutUser = () => dispatch => {
+
+
+    dispatch({
+        type : LOGOUT_USER,
+        payload : null
+    });
+
 }

@@ -3,11 +3,20 @@ import { connect } from 'react-redux'
 import {addProduct} from '../actions/productAction';
 export class ProductLisItem extends Component {
 
-  
-  constructor(props){
-      super(props);
 
-     
+    constructor(props){
+        super(props);
+
+        this.onCartChanged = this.onCartChanged.bind(this);
+       
+    }
+
+  
+  onCartChanged = (id) => {
+
+        console.log("id",id);
+        this.props.addToCart(id);
+
   }  
 
 
@@ -31,7 +40,7 @@ export class ProductLisItem extends Component {
 
             <div className="extra content">
                 <span className="right floated">
-                <button className="ui button " style={{zIndex : 99999}}  onClick={this.props.addToCart(id)}>Add to Cart</button>
+                <button className="ui button " style={{zIndex : 99999}}  onClick={this.onCartChanged(id)}>Add to Cart</button>
                 </span>
                 <span>
                     {price} 
