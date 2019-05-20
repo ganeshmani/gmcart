@@ -25,10 +25,13 @@ export const addProduct = productData => dispatch => {
         body : JSON.stringify(productData)
     })
     .then(res => res.json())
-    .then( data => 
+    .then( data => {
+        console.log("data=>",data);
         dispatch({
             type : ADD_PRODUCT,
-            payload : data
-        }) )
+            payload : data.data
+        }) 
+    }
+      )
         .catch(e => console.log(`Error ${e}`));       
 }

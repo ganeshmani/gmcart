@@ -28,10 +28,14 @@ router.post('/login', async (req,res) => {
     else{
         try{
   
-            let user = await User.findOne(
+            User.findOne(
                 { 
                     $or : [ { 'username' : req.body.username },{ 'email' : req.body.username } ]
-                });
+                }).populate('products').exec((e,user) => {
+                    console.log("user",user);
+                
+
+            // console.log("user",user);    
 
             if(user && user.validPassword(req.body.password)){
 
@@ -47,7 +51,8 @@ router.post('/login', async (req,res) => {
                     message : 'Invalid Credentials',
                     data : null
                 })
-            }      
+            }
+          });      
         }
         catch(e){
             console.log("Error",e);    
@@ -188,11 +193,17 @@ router.post('/addtocart', async (req,res) => {
               } 
           })
 
-          res.status(200).json({
-              status : 1,
-              message : 'product added successfully',
-              data : user
-          })
+         User.findById(req.body.userid).populate('products').exec((e,user) => {
+
+            res.status(200).json({
+                status : 1,
+                message : 'product added successfully',
+                data : user
+            })
+
+          });;
+
+         
         }
         catch(e){
             console.log("Error",e);
@@ -240,7 +251,9 @@ router.post('/checkout', async (req,res) => {
         }
 
     }
-})
+});
+
+
 
 
 module.exports = router;

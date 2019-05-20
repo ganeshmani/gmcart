@@ -20,9 +20,19 @@ export class Navbar extends Component {
     this.renderRedirect = this.renderRedirect.bind(this);
   }
 
+  componentWillReceiveProps(nextprops){
+     console.log(nextprops);
+  }
+
+  componentDidUpdate(){
+     console.log("update->",this.props.user);
+  }
+
+
+
   renderRedirect = () => {
     if (this.state.redirect) {
-      return <Redirect to='/target' />
+      return <Redirect to='/user/checkout' />
     }
   }
 
@@ -42,7 +52,7 @@ export class Navbar extends Component {
   render() {
 
     let  user = this.props.user.user; 
-    console.log(this.props.user.user);
+    console.log("user data =>",this.props.user.user);
 
     return (
       <div className="ui small menu">
@@ -59,7 +69,7 @@ export class Navbar extends Component {
               </div>
 
               <div className="item" onClick={this.setRedirect}>
-                    <i class="fa fa-shopping-cart"></i>
+                    <i className="fa fa-shopping-cart"></i>
                     <i className="ui red circular label">{user.products.length}</i>
               </div>
 
