@@ -10,7 +10,7 @@ export class Navbar extends Component {
     super(props);
 
     this.state = {
-      redirect: false
+      redirect: false,
     }
 
     this.onLogOut = this.onLogOut.bind(this);
@@ -19,6 +19,8 @@ export class Navbar extends Component {
 
     this.renderRedirect = this.renderRedirect.bind(this);
   }
+
+  
 
   componentWillReceiveProps(nextprops){
      console.log(nextprops);
@@ -41,7 +43,6 @@ export class Navbar extends Component {
       redirect: true
     })
   }
-
 
   onLogOut = () => {
 
@@ -101,9 +102,7 @@ export class Navbar extends Component {
 }
 
 const mapStateToProps = state => ({
-   
    user : state.user
-
 })
 
 export default connect(mapStateToProps,{logoutUser})(Navbar)

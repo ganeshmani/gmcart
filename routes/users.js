@@ -232,6 +232,7 @@ router.post('/checkout', async (req,res) => {
     }
     else{
         try{
+
             const user = User.findById(mongoose.Types.ObjectId(req.body.userid)).populate('products');
 
             let products = user;
@@ -252,6 +253,71 @@ router.post('/checkout', async (req,res) => {
 
     }
 });
+
+router.post('/removeitem', async (req,res) => {
+    const validationSchema = Joi.object().keys({
+        'userid' : Joi.string().required(),
+        'productid' : Joi.string().required()
+    });
+
+    const { error, value } = Joi.validate(req.body,validationSchema);
+
+    if(error){
+
+        res.status(400).json({
+            status : 0,
+            message : error.details[0].message
+        })
+
+    }
+    else{
+
+        try{
+
+            User.findById(mongoose.Types.ObjectId(req.body.userid)).populate('products').exec(async (e,user) =>{
+
+                let products = user.products;
+                console.log("req product id",req.body.productid);
+                console.log("req product id",typeof(req.body.productid));
+                console.log("products",products);
+    
+                let updatedProduct = products.filter((item) => {
+                      console.log(item._id != req.body.productid);
+                      return item._id != req.body.productid;
+                });
+    
+                console.log("updatedPRoduct",updatedProduct);
+    
+                user.products = updatedProduct;
+    
+                await user.save();
+    
+                // await User.updateOne({ _id : mongoose.Types.ObjectId(req.body.userid) },{
+                //     $set : {
+                //         products : updatedProduct
+                //     }
+                // })
+    
+                res.status(200).json({
+                    message : 'success',
+                    data : user
+                })
+
+            });
+
+           
+
+        }
+        catch(e){
+
+            res.status(500).json({
+                message : 'Something went wrong',
+                data : null
+            })
+
+        }
+    }
+})
 
 
 

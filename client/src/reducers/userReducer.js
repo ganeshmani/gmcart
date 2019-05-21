@@ -1,8 +1,7 @@
-import { LOGIN_USER,REGISTER_USER, LOGOUT_USER } from '../actions/types';
+import { LOGIN_USER,REGISTER_USER, LOGOUT_USER,ADD_PRODUCT,REMOVE_PRODUCT } from '../actions/types';
 
 const initialState = {
     user : {},
-    products : []
 }
 
 export default function(state=initialState,action){
@@ -12,6 +11,18 @@ export default function(state=initialState,action){
                 ...state,
                 user : action.payload
             }
+
+        case ADD_PRODUCT:
+            return {
+                ...state,
+                user : action.payload
+            }   
+            
+        case REMOVE_PRODUCT:
+            return {
+                ...state,
+                user : action.payload
+            }     
         
         case REGISTER_USER:
             return {

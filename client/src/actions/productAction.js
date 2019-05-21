@@ -1,4 +1,4 @@
-import { FETCH_PRODUCTS,ADD_PRODUCT } from './types';
+import { FETCH_PRODUCTS,ADD_PRODUCT,REMOVE_PRODUCT } from './types';
 
 export const fetchProducts = () => dispatch => {
 
@@ -34,4 +34,24 @@ export const addProduct = productData => dispatch => {
     }
       )
         .catch(e => console.log(`Error ${e}`));       
+}
+
+export const removeProduct = productData => dispatch => {
+    
+    fetch('http://localhost:3123/removeitem',{
+        method : 'POST',
+        headers : {
+            'content-type' : 'application/json'
+        },
+        body : JSON.stringify(productData)
+    })
+    .then(res => res.json())
+    .then(data => {
+        console.log("remove product data",data);
+        dispatch({
+            type : REMOVE_PRODUCT,
+            payload : data.data
+        })
+    })
+    .catch(e => console.log(e));
 }

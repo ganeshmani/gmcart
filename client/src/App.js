@@ -12,7 +12,7 @@ class App extends Component {
 
     let user = this.props.user.user ? this.props.user.user : '';
 
-    
+    console.log("user",user);
     
     return (
 
