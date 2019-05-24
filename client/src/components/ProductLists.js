@@ -21,7 +21,7 @@ export class ProductLists extends Component {
   
 
   onCartChange = (id) => {
-      console.log("id =>",id);  
+      
 
       let productData = {
           userid : this.props.user._id,
