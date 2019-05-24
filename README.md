@@ -9,11 +9,22 @@ MongoDB, Expressjs, React/Redux, Nodejs
 - npm
 - MongoDB
 
+## Clone or Download
+```terminal
+$ git clone https://github.com/ganeshmani/gmcart.git
+$ npm i
+```
+
 ## Client side (PORT 3000)
 ```bash
 $ cd client
 $ npm install
 $ npm start
+```
+### To import the Mock Products Data to MongoDB
+```terminal
+$ cd /data
+$ mongoimport --db gmcartdb --collection products --file products.json --jsonArray
 ```
 
 ## Server Side (PORT 3123)
@@ -24,5 +35,3 @@ $ npm run dev
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
-
-
