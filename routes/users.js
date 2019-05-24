@@ -6,10 +6,6 @@ const mongoose = require('mongoose');
 const Joi = require('joi');
 
 
-router.get('/',(req,res) => {
-    console.log(`it is working`);
-})
-
 router.post('/login', async (req,res) => {
 
     const validationSchema = Joi.object().keys({
@@ -27,7 +23,7 @@ router.post('/login', async (req,res) => {
     }
     else{
         try{
-  
+            
             User.findOne(
                 { 
                     $or : [ { 'username' : req.body.username },{ 'email' : req.body.username } ]
@@ -94,6 +90,7 @@ router.post('/register', async (req,res) => {
             await user.save()
 
             res.status(200).json({
+                status : 1,
                 message : 'success',
                 data : user
             })
@@ -108,66 +105,6 @@ router.post('/register', async (req,res) => {
     }
 })
 
-router.post('/product/save',async (req,res) => {
-    try{
-
-        let product = new Product();
-
-        product.productname = req.body.productname;
-        product.price = req.body.price;
-        product.currency = req.body.currency;
-        product.image = req.body.image;
-
-
-        await product.save();
-
-        res.status(200).json({
-            message : 'success'
-        })
-
-    }
-    catch(e){
-
-        console.log("error",e);
-
-        res.status(500).json({
-            message : 'failed'
-        });
-    }
-})
-
-router.get('/product/list', async (req,res) => {
-
-    try{
-
-        let product = await Product.find({});
-
-        if(product){
-
-            res.status(200).json({
-                status : 1,
-                message : 'success',
-                data : product
-            })
-        }
-        else{
-
-            res.status(200).json({
-                status : 1,
-                message : 'sucess',
-                data : null
-            })
-        }
-    }
-    catch(e){
-        console.log("error",e);
-        res.status(500).json({
-            status : 0,
-            message : 'failed',
-            data : null
-        })
-    }
-});
 
 router.post('/addtocart', async (req,res) => {
 
@@ -216,43 +153,6 @@ router.post('/addtocart', async (req,res) => {
     }
 })
 
-router.post('/checkout', async (req,res) => {
-
-    const validationSchema = Joi.object().keys({
-        'userid' : Joi.any().required()
-    });
-
-    const { error,value } = Joi.validate(req.body,validationSchema);
-
-    if(error){
-        res.status(400).json({
-            status : 0,
-            message : error.details[0].message
-        })
-    }
-    else{
-        try{
-
-            const user = User.findById(mongoose.Types.ObjectId(req.body.userid)).populate('products');
-
-            let products = user;
-            
-            res.status(200).json({
-                message : 'success',
-                data : products
-            });
-        }
-        catch(e){
-
-            res.status(500).json({
-                message : 'failure',
-                data : null
-            })
-
-        }
-
-    }
-});
 
 router.post('/removeitem', async (req,res) => {
     const validationSchema = Joi.object().keys({

@@ -41,7 +41,7 @@ export const registerUser = userData => dispatch => {
 
                 dispatch({
                     type : REGISTER_USER,
-                    payload : user
+                    payload : user.data
                 })
             }
         }

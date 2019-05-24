@@ -24,6 +24,7 @@ mongoose.connect(MONGODB_URI,(err,res) => {
     console.log(`mongodb is connected to ${MONGODB_URI}`)
 });
 
+app.use('/',require('./routes/product'));
 app.use('/',require('./routes/users'));
 
 const PORT = process.env.PORT;

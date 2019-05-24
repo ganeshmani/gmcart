@@ -44,7 +44,7 @@ export class Register extends Component {
 
       this.props.registerUser(data);
 
-      // this.props.history.push('/');
+       this.props.history.push('/');
 
     }
   }
@@ -57,7 +57,7 @@ export class Register extends Component {
         alert = <div className="ui negative message">
             <i className="close icon"></i>
             <div className="header">
-                Please LogIn and try again
+                Password Mismatch
             </div>
         </div>
     }
