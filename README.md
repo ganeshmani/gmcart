@@ -4,6 +4,10 @@
 <p align="center">
 MongoDB, Expressjs, React/Redux, Nodejs
 </p>
+
+# Demo
+![Demo](https://github.com/ganeshmani/gmcart/blob/master/petstore_demo.gif)
+
 ## Prerequirements
 - Node > 8
 - npm
