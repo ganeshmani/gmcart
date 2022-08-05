@@ -18,7 +18,7 @@
     "express": "^4.16.4",
     "helmet": "^3.18.0",
     "joi": "^14.3.1",
-    "mongoose": "^5.5.6"
+    "mongoose": "^5.7.5"
   },
   "devDependencies": {
     "jest": "^24.8.0",
